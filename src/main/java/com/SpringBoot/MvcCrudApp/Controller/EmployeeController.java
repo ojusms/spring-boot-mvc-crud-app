@@ -48,6 +48,20 @@ public class EmployeeController {
         return "employee-form";
     }
 
+    // add a mapping for "/showFormForUpdate"
+    // request parameter employeeId from the update button url is bound to method parameter theId
+
+    @GetMapping("/showFormForUpdate")
+    public String showFormForUpdate(@RequestParam("employeeId") int theId, Model theModel) {
+        // fetch employee by ID
+        Employee theEmployee = employeeService.findById(theId);
+
+        // set employee in the model
+        theModel.addAttribute("employee",theEmployee);
+
+        return "employee-form";
+    }
+
     // add a mapping for "/saveEmployee"
 
     @PostMapping("/save")
