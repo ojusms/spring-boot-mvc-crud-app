@@ -72,4 +72,15 @@ public class EmployeeController {
         // return employee list to prevent duplicate entries. Post/Redirect/Get design pattern
         return "redirect:/employees/list";
     }
+
+    // add a mapping for "/delete"
+
+    @GetMapping("/delete")
+    public String deleteEmployee(@RequestParam("employeeId") int theId) {
+        // delete employee
+        employeeService.deleteById(theId);
+
+        // redirect to employee list
+        return "redirect:/employees/list";
+    }
 }
