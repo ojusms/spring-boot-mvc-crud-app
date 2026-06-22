@@ -5,8 +5,7 @@ import com.SpringBoot.MvcCrudApp.Entity.Employee;
 import com.SpringBoot.MvcCrudApp.Service.EmployeeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -47,5 +46,16 @@ public class EmployeeController {
         theModel.addAttribute("employee",theEmployee);
 
         return "employee-form";
+    }
+
+    // add a mapping for "/saveEmployee"
+
+    @PostMapping("/save")
+    public String saveEmployee(@ModelAttribute("employee") Employee theEmployee) {
+        // save the employee
+        employeeService.save(theEmployee);
+
+        // return employee list to prevent duplicate entries. Post/Redirect/Get design pattern
+        return "redirect:/employees/list";
     }
 }
