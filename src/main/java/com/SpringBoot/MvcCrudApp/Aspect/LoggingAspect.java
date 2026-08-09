@@ -1,6 +1,7 @@
 package com.SpringBoot.MvcCrudApp.Aspect;
 
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -49,5 +50,18 @@ public class LoggingAspect {
         for (Object tempArg : args) {
             logger.info("=====> argument: "+tempArg);
         }
+    }
+
+    // add @AfterReturning advice. Uses the Pointcut expression above and the method has parameters for a JoinPoint object
+    // and an Object type object for which the result of target method execution is binded to, specified by 'returning'
+    @AfterReturning(pointcut = "forAppFlow()",
+                    returning = "result")
+    private void afterReturning(JoinPoint joinPoint, Object result) {
+        // display method being called
+        String method = joinPoint.getSignature().toShortString();
+        logger.info("=====> in @AfterReturning: calling method: "+method);
+
+        // display the data returned
+        logger.info("=====> result: "+result);
     }
 }
