@@ -1,6 +1,8 @@
 package com.SpringBoot.MvcCrudApp.Aspect;
 
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 
@@ -31,4 +33,13 @@ public class LoggingAspect {
     // create a combined expression
     @Pointcut("forController() || forDAO() || forService()")
     private void forAppFlow() {}
+
+    // add @Before advice. Uses the Pointcut expression above and the method has a parameter for a JoinPoint object
+    // which provides access to data about the target function
+    @Before("forAppFlow()")
+    private void before(JoinPoint joinPoint) {
+        // display method being called
+        String method = joinPoint.getSignature().toShortString();
+        logger.info("=====> in @Before: calling method: "+method);
+    }
 }
