@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.logging.Logger;
 
-// annotated with @Aspect to declare as an Aspect for AOP and with @Componenet to indicate it is a component
+// annotated with @Aspect to declare as an Aspect for AOP practices and with @Componenet to indicate it is a component
 // and enable component scanning
 @Aspect
 @Component
@@ -41,5 +41,13 @@ public class LoggingAspect {
         // display method being called
         String method = joinPoint.getSignature().toShortString();
         logger.info("=====> in @Before: calling method: "+method);
+
+        // display arguments of target method
+        // get the arguments
+        Object[] args = joinPoint.getArgs();
+        // iterate over the array of arguments and display
+        for (Object tempArg : args) {
+            logger.info("=====> argument: "+tempArg);
+        }
     }
 }
